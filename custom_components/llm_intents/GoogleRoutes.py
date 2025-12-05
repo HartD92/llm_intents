@@ -8,9 +8,9 @@ from homeassistant.util.json import JsonObjectType
 
 from .cache import SQLiteCache
 from .const import (
-    CONF_GOOGLE_ROUTES_API_KEY,
-    CONF_GOOGLE_ROUTES_LATITUDE,
-    CONF_GOOGLE_ROUTES_LONGITUDE,
+    CONF_GOOGLE_PLACES_API_KEY,
+    CONF_GOOGLE_PLACES_LATITUDE,
+    CONF_GOOGLE_PLACES_LONGITUDE,
     CONF_GOOGLE_ROUTES_TRAVEL_MODE,
     DOMAIN,
     SERVICE_DEFAULTS,
@@ -62,9 +62,9 @@ class GetTransitTimesTool(llm.Tool):
 
         destination = tool_input.tool_args["destination"]
 
-        api_key = config_data.get(CONF_GOOGLE_ROUTES_API_KEY)
-        latitude = config_data.get(CONF_GOOGLE_ROUTES_LATITUDE)
-        longitude = config_data.get(CONF_GOOGLE_ROUTES_LONGITUDE)
+        api_key = config_data.get(CONF_GOOGLE_PLACES_API_KEY)
+        latitude = config_data.get(CONF_GOOGLE_PLACES_LATITUDE)
+        longitude = config_data.get(CONF_GOOGLE_PLACES_LONGITUDE)
         travel_mode = config_data.get(
             CONF_GOOGLE_ROUTES_TRAVEL_MODE,
             SERVICE_DEFAULTS.get(CONF_GOOGLE_ROUTES_TRAVEL_MODE),
