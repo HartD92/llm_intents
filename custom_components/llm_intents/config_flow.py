@@ -197,8 +197,7 @@ SEARCH_STEP_ORDER = {
     STEP_USER: [None, get_step_user_data_schema],
     STEP_BRAVE: [CONF_BRAVE_ENABLED, get_brave_schema],
     STEP_GOOGLE_PLACES: [CONF_GOOGLE_PLACES_ENABLED, get_google_places_schema],
-    # Only allow Google Routes if Google Places is enabled
-    STEP_GOOGLE_ROUTES: [(CONF_GOOGLE_PLACES_ENABLED, CONF_GOOGLE_ROUTES_ENABLED), get_google_routes_schema],
+    STEP_GOOGLE_ROUTES: [CONF_GOOGLE_ROUTES_ENABLED, get_google_routes_schema],
     STEP_WIKIPEDIA: [CONF_WIKIPEDIA_ENABLED, get_wikipedia_schema],
 }
 
@@ -225,12 +224,12 @@ def get_next_step(
 
     for key in keys[start:]:
         config_key, schema_func = step_order[key]
-        # If config_key is a tuple, check both conditions
-        if isinstance(config_key, tuple):
-            places_enabled, routes_enabled = config_key
-            if config_data.get(places_enabled) and config_data.get(routes_enabled):
+        # Only allow Google Routes if Google Places is enabled
+        if key == STEP_GOOGLE_ROUTES:
+            if config_data.get(CONF_GOOGLE_PLACES_ENABLED) and config_data.get(CONF_GOOGLE_ROUTES_ENABLED):
                 return key, schema_func
-        elif config_key is None or config_data.get(config_key):
+            continue
+        if config_key is None or config_data.get(config_key):
             return key, schema_func
 
     return None
