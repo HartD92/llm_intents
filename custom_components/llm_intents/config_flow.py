@@ -31,10 +31,7 @@ from .const import (
     CONF_GOOGLE_PLACES_NUM_RESULTS,
     CONF_GOOGLE_PLACES_RADIUS,
     CONF_GOOGLE_PLACES_RANKING,
-    CONF_GOOGLE_ROUTES_API_KEY,
     CONF_GOOGLE_ROUTES_ENABLED,
-    CONF_GOOGLE_ROUTES_LATITUDE,
-    CONF_GOOGLE_ROUTES_LONGITUDE,
     CONF_GOOGLE_ROUTES_TRAVEL_MODE,
     CONF_HOURLY_WEATHER_ENTITY,
     CONF_WEATHER_ENABLED,
@@ -65,7 +62,6 @@ def get_step_user_data_schema(hass) -> vol.Schema:
     schema = {
         vol.Optional(CONF_BRAVE_ENABLED, default=False): bool,
         vol.Optional(CONF_GOOGLE_PLACES_ENABLED, default=False): bool,
-        # Only show Google Routes option if Google Places is enabled
         vol.Optional(CONF_GOOGLE_ROUTES_ENABLED, default=False): bool,
         vol.Optional(CONF_WIKIPEDIA_ENABLED, default=False): bool,
         vol.Optional(CONF_WEATHER_ENABLED, default=False): bool,
@@ -200,8 +196,7 @@ SEARCH_STEP_ORDER = {
     STEP_USER: [None, get_step_user_data_schema],
     STEP_BRAVE: [CONF_BRAVE_ENABLED, get_brave_schema],
     STEP_GOOGLE_PLACES: [CONF_GOOGLE_PLACES_ENABLED, get_google_places_schema],
-    # Only allow Google Routes if Google Places is enabled
-    STEP_GOOGLE_ROUTES: [(CONF_GOOGLE_PLACES_ENABLED, CONF_GOOGLE_ROUTES_ENABLED), get_google_routes_schema],
+    STEP_GOOGLE_ROUTES: [CONF_GOOGLE_ROUTES_ENABLED, get_google_routes_schema],
     STEP_WIKIPEDIA: [CONF_WIKIPEDIA_ENABLED, get_wikipedia_schema],
 }
 

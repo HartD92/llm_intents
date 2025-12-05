@@ -49,9 +49,6 @@ CONF_GOOGLE_PLACES_RANKING = "google_places_rank_preference"
 # Google Routes-specific constants
 
 CONF_GOOGLE_ROUTES_ENABLED = "google_routes_enabled"
-CONF_GOOGLE_ROUTES_API_KEY = "google_routes_api_key"
-CONF_GOOGLE_ROUTES_LATITUDE = "google_routes_latitude"
-CONF_GOOGLE_ROUTES_LONGITUDE = "google_routes_longitude"
 CONF_GOOGLE_ROUTES_TRAVEL_MODE = "google_routes_travel_mode"
 
 # Wikipedia-specific constants
