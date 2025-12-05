@@ -62,6 +62,7 @@ def get_step_user_data_schema(hass) -> vol.Schema:
     schema = {
         vol.Optional(CONF_BRAVE_ENABLED, default=False): bool,
         vol.Optional(CONF_GOOGLE_PLACES_ENABLED, default=False): bool,
+        vol.Optional(CONF_GOOGLE_ROUTES_ENABLED, default=False): bool,
         vol.Optional(CONF_WIKIPEDIA_ENABLED, default=False): bool,
         vol.Optional(CONF_WEATHER_ENABLED, default=False): bool,
     }
@@ -226,9 +227,8 @@ def get_next_step(
         config_key, schema_func = step_order[key]
         # Only allow Google Routes if Google Places is enabled
         if key == STEP_GOOGLE_ROUTES:
-            if config_data.get(CONF_GOOGLE_PLACES_ENABLED) and config_data.get(CONF_GOOGLE_ROUTES_ENABLED):
-                return key, schema_func
-            continue
+            if not config_data.get(CONF_GOOGLE_PLACES_ENABLED):
+                continue
         if config_key is None or config_data.get(config_key):
             return key, schema_func
 
