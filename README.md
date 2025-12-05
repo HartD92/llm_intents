@@ -4,6 +4,7 @@ Additional tools for LLM-backed Assist for Home Assistant:
 
 * **Brave Web Search**
 * **Google Places**
+* **Google Routes** (Transit Times)
 * **Wikipedia**
 * **Weather Forecast**
 
@@ -112,6 +113,34 @@ Search results include the location name, address, rating score, current open st
 | `Longitude`         | ❌        | —          | Your locations longitude, if you wish to use location biasing (recommended) |
 | `Radius`            | ❌        | `5`        | The radius around your location for location biased results (in kilometres) |
 | `Rank Preference`   | ❌        | `Distance` | The ranking preference for search results from Google Places                |
+
+---
+
+### 🚗 Google Routes
+
+Calculates transit times and routes to destinations using the Google Maps Routes API.
+
+Provides real-time traffic-aware routing information, including duration and distance to any destination.
+
+#### Requirements
+
+* Requires a [Google Maps Routes API key](https://developers.google.com/maps/documentation/routes).
+* Ensure the Routes API is enabled in your Google Cloud project.
+
+#### Configuration Steps
+
+1. Select "Google Routes" during setup.
+2. Enter your [Google Maps Routes API key](https://developers.google.com/maps/documentation/routes).
+3. Configure your home location (latitude/longitude) as the starting point for routes.
+
+#### Options
+
+| Setting       | Required | Default | Description                                                               |
+|---------------|----------|---------|---------------------------------------------------------------------------|
+| `API Key`     | ✅        | —       | Google Maps Routes API key                                                |
+| `Latitude`    | ✅        | —       | Your home location latitude (used as the origin for route calculations)   |
+| `Longitude`   | ✅        | —       | Your home location longitude (used as the origin for route calculations)  |
+| `Travel Mode` | ❌        | `DRIVE` | Travel mode: DRIVE, WALK, BICYCLE, TRANSIT, or TWO_WHEELER                |
 
 ---
 

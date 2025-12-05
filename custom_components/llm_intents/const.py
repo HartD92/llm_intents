@@ -46,6 +46,14 @@ CONF_GOOGLE_PLACES_LONGITUDE = "google_places_longitude"
 CONF_GOOGLE_PLACES_RADIUS = "google_places_radius"
 CONF_GOOGLE_PLACES_RANKING = "google_places_rank_preference"
 
+# Google Routes-specific constants
+
+CONF_GOOGLE_ROUTES_ENABLED = "google_routes_enabled"
+CONF_GOOGLE_ROUTES_API_KEY = "google_routes_api_key"
+CONF_GOOGLE_ROUTES_LATITUDE = "google_routes_latitude"
+CONF_GOOGLE_ROUTES_LONGITUDE = "google_routes_longitude"
+CONF_GOOGLE_ROUTES_TRAVEL_MODE = "google_routes_travel_mode"
+
 # Wikipedia-specific constants
 
 CONF_WIKIPEDIA_ENABLED = "wikipedia_enabled"
@@ -73,6 +81,10 @@ SERVICE_DEFAULTS = {
     CONF_GOOGLE_PLACES_LONGITUDE: "",
     CONF_GOOGLE_PLACES_RADIUS: 5,
     CONF_GOOGLE_PLACES_RANKING: "Distance",
+    CONF_GOOGLE_ROUTES_API_KEY: "",
+    CONF_GOOGLE_ROUTES_LATITUDE: "",
+    CONF_GOOGLE_ROUTES_LONGITUDE: "",
+    CONF_GOOGLE_ROUTES_TRAVEL_MODE: "DRIVE",
     CONF_WIKIPEDIA_NUM_RESULTS: 1,
     CONF_DAILY_WEATHER_ENTITY: None,
     CONF_HOURLY_WEATHER_ENTITY: None,
