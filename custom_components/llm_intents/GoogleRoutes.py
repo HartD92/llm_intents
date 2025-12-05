@@ -36,7 +36,7 @@ class GetTransitTimesTool(llm.Tool):
 
     response_directive = "\n".join(
         [
-            "Use the route information to answer the users query.",
+            "Use the route information to answer the user's query.",
             "Focus on the transit time and relevant route details the user is interested in.",
         ]
     )
@@ -48,10 +48,6 @@ class GetTransitTimesTool(llm.Tool):
             ): str,
         }
     )
-
-    def wrap_response(self, response: dict) -> dict:
-        response["instruction"] = self.response_instruction
-        return response
 
     async def async_call(
         self,
@@ -110,11 +106,6 @@ class GetTransitTimesTool(llm.Tool):
                 [
                     "routes.duration",
                     "routes.distanceMeters",
-                    "routes.polyline.encodedPolyline",
-                    "routes.legs.duration",
-                    "routes.legs.distanceMeters",
-                    "routes.legs.startLocation",
-                    "routes.legs.endLocation",
                 ]
             )
 
