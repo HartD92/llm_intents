@@ -38,6 +38,7 @@ jobs:
         uses: sigstore/gh-action-sigstore-python@v3.0.1
         with:
           inputs: ${{ github.workspace }}/custom_components/llm_intents/llm_intents.zip
+          release-signing-artifacts: true
 
       - name: "Upload the ZIP file to the release"
         uses: "softprops/action-gh-release@v2.3.3"
