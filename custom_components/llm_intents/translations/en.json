@@ -51,6 +51,14 @@
           "weather_hourly_entity": "Hourly Weather Entity"
         }
       }
+      },
+      "google_routes": {
+        "title": "Configure Google Routes",
+        "description": "Configure Google Routes API settings.",
+        "data": {
+          "google_routes_enabled": "Enable Google Routes",
+          "google_routes_travel_mode": "Travel Mode (DRIVE, WALK, BICYCLE, TRANSIT)"
+        }
     },
     "abort": {
       "single_instance_allowed": "Only one instance of Tools for Assist is allowed"

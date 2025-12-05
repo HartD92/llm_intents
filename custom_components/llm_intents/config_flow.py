@@ -65,6 +65,7 @@ def get_step_user_data_schema(hass) -> vol.Schema:
     schema = {
         vol.Optional(CONF_BRAVE_ENABLED, default=False): bool,
         vol.Optional(CONF_GOOGLE_PLACES_ENABLED, default=False): bool,
+        # Only show Google Routes option if Google Places is enabled
         vol.Optional(CONF_GOOGLE_ROUTES_ENABLED, default=False): bool,
         vol.Optional(CONF_WIKIPEDIA_ENABLED, default=False): bool,
         vol.Optional(CONF_WEATHER_ENABLED, default=False): bool,
@@ -137,19 +138,20 @@ def get_google_places_schema(hass) -> vol.Schema:
 
 def get_google_routes_schema(hass) -> vol.Schema:
     """Return the static schema for Google Routes service configuration."""
+    # Use Google Places API key, latitude, longitude
     return vol.Schema(
         {
             vol.Required(
-                CONF_GOOGLE_ROUTES_API_KEY,
-                default=SERVICE_DEFAULTS.get(CONF_GOOGLE_ROUTES_API_KEY),
+                CONF_GOOGLE_PLACES_API_KEY,
+                default=SERVICE_DEFAULTS.get(CONF_GOOGLE_PLACES_API_KEY),
             ): str,
             vol.Required(
-                CONF_GOOGLE_ROUTES_LATITUDE,
-                default=SERVICE_DEFAULTS.get(CONF_GOOGLE_ROUTES_LATITUDE),
+                CONF_GOOGLE_PLACES_LATITUDE,
+                default=SERVICE_DEFAULTS.get(CONF_GOOGLE_PLACES_LATITUDE),
             ): str,
             vol.Required(
-                CONF_GOOGLE_ROUTES_LONGITUDE,
-                default=SERVICE_DEFAULTS.get(CONF_GOOGLE_ROUTES_LONGITUDE),
+                CONF_GOOGLE_PLACES_LONGITUDE,
+                default=SERVICE_DEFAULTS.get(CONF_GOOGLE_PLACES_LONGITUDE),
             ): str,
             vol.Optional(
                 CONF_GOOGLE_ROUTES_TRAVEL_MODE,
@@ -198,7 +200,8 @@ SEARCH_STEP_ORDER = {
     STEP_USER: [None, get_step_user_data_schema],
     STEP_BRAVE: [CONF_BRAVE_ENABLED, get_brave_schema],
     STEP_GOOGLE_PLACES: [CONF_GOOGLE_PLACES_ENABLED, get_google_places_schema],
-    STEP_GOOGLE_ROUTES: [CONF_GOOGLE_ROUTES_ENABLED, get_google_routes_schema],
+    # Only allow Google Routes if Google Places is enabled
+    STEP_GOOGLE_ROUTES: [(CONF_GOOGLE_PLACES_ENABLED, CONF_GOOGLE_ROUTES_ENABLED), get_google_routes_schema],
     STEP_WIKIPEDIA: [CONF_WIKIPEDIA_ENABLED, get_wikipedia_schema],
 }
 
@@ -225,7 +228,12 @@ def get_next_step(
 
     for key in keys[start:]:
         config_key, schema_func = step_order[key]
-        if config_key is None or config_data.get(config_key):
+        # If config_key is a tuple, check both conditions
+        if isinstance(config_key, tuple):
+            places_enabled, routes_enabled = config_key
+            if config_data.get(places_enabled) and config_data.get(routes_enabled):
+                return key, schema_func
+        elif config_key is None or config_data.get(config_key):
             return key, schema_func
 
     return None
