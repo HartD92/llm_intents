@@ -31,10 +31,7 @@ from .const import (
     CONF_GOOGLE_PLACES_NUM_RESULTS,
     CONF_GOOGLE_PLACES_RADIUS,
     CONF_GOOGLE_PLACES_RANKING,
-    CONF_GOOGLE_ROUTES_API_KEY,
     CONF_GOOGLE_ROUTES_ENABLED,
-    CONF_GOOGLE_ROUTES_LATITUDE,
-    CONF_GOOGLE_ROUTES_LONGITUDE,
     CONF_GOOGLE_ROUTES_TRAVEL_MODE,
     CONF_HOURLY_WEATHER_ENTITY,
     CONF_WEATHER_ENABLED,
@@ -65,8 +62,6 @@ def get_step_user_data_schema(hass) -> vol.Schema:
     schema = {
         vol.Optional(CONF_BRAVE_ENABLED, default=False): bool,
         vol.Optional(CONF_GOOGLE_PLACES_ENABLED, default=False): bool,
-        # Only show Google Routes option if Google Places is enabled
-        vol.Optional(CONF_GOOGLE_ROUTES_ENABLED, default=False): bool,
         vol.Optional(CONF_WIKIPEDIA_ENABLED, default=False): bool,
         vol.Optional(CONF_WEATHER_ENABLED, default=False): bool,
     }
@@ -108,6 +103,8 @@ def get_google_places_schema(hass) -> vol.Schema:
     """Return the static schema for Google Places service configuration."""
     return vol.Schema(
         {
+            # Only show Google Routes option if Google Places is enabled
+            vol.Optional(CONF_GOOGLE_ROUTES_ENABLED, default=False): bool,
             vol.Required(
                 CONF_GOOGLE_PLACES_API_KEY,
                 default=SERVICE_DEFAULTS.get(CONF_GOOGLE_PLACES_API_KEY),
@@ -397,10 +394,6 @@ class LlmIntentsOptionsFlow(config_entries.OptionsFlowWithReload):
                 vol.Optional(
                     CONF_GOOGLE_PLACES_ENABLED,
                     default=defaults.get(CONF_GOOGLE_PLACES_ENABLED, False),
-                ): bool,
-                vol.Optional(
-                    CONF_GOOGLE_ROUTES_ENABLED,
-                    default=defaults.get(CONF_GOOGLE_ROUTES_ENABLED, False),
                 ): bool,
                 vol.Optional(
                     CONF_WIKIPEDIA_ENABLED,
